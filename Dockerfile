@@ -9,4 +9,4 @@ RUN unzip phtogenic.zip
 RUN cp -rvf phtogenic/* .
 RUN rm -rf phtogenic phtogenic.zip 
 CMD ["user/sbin/httpd","-D", "FOREGROUND"]
-EXPOSE 71
+EXPOSE 71 80
