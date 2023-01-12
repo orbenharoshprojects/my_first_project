@@ -1,19 +1,19 @@
-FROM centos
-MAINTAINER orbenharoshprojects@gmail.com
+# our base image
+FROM alpine:3.5
 
-RUN cd /etc/yum.repos.d/
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+# Install python and pip
+RUN apk add --update py2-pip
 
-RUN yum -y install java
+# install Python modules needed by the Python app
+COPY requirements.txt /usr/src/app/
+RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 
-ADD https://www.free-css.com/assets/files/free-css-templaets/download/page254/phtogenic.zip /var/www/html/
-WORKDIR /var/www/html
-RUN yum install unzip -y 
-RUN unzip phtogenic.zip 
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic phtogenic.zip 
-CMD ["user/sbin/httpd","-D", "FOREGROUND"]
-EXPOSE 71 80 8080
+# copy files required for the app to run
+COPY app.py /usr/src/app/
+COPY templates/index.html /usr/src/app/templates/
 
+# tell the port number the container should expose
+EXPOSE 5000
 
+# run the application
+CMD ["python", "/usr/src/app/app.py"]
