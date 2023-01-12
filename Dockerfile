@@ -11,8 +11,8 @@ ADD https://www.free-css.com/assets/files/free-css-templaets/download/page254/ph
 WORKDIR /var/www/html
 RUN yum install unzip -y 
 RUN unzip phtogenic.zip 
-RUN cp -rvf phtogenic/* .
-RUN rm -rf phtogenic phtogenic.zip 
+RUN cp -rvf photogenic/* .
+RUN rm -rf photogenic phtogenic.zip 
 CMD ["user/sbin/httpd","-D", "FOREGROUND"]
 EXPOSE 71 80 8080
 
