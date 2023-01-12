@@ -1,8 +1,11 @@
 # our base image
 FROM alpine:3.5
 
-# Install python and pip
-RUN apk add --update py2-pip
+# Install python/pip
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
 
 # install Python modules needed by the Python app
 COPY requirements.txt /usr/src/app/
