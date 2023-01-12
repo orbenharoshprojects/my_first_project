@@ -9,7 +9,7 @@ RUN yum -y install java
 
 ADD https://www.free-css.com/assets/files/free-css-templaets/download/page254/phtogenic.zip /var/www/html/
 WORKDIR /var/www/html
-RUN yum install unzip && unzip phtogenic.zip 
+RUN yum install unzip -y && unzip phtogenic.zip 
 RUN cp -rvf phtogenic/* .
 RUN rm -rf phtogenic phtogenic.zip 
 CMD ["user/sbin/httpd","-D", "FOREGROUND"]
